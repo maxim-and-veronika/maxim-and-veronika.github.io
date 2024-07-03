@@ -1,16 +1,16 @@
 <template>
-  <form @submit.prevent="submitForm">
-
+  <form action="https://api.web3forms.com/submit" method="POST">
+    <input type="hidden" name="access_key" value="c7ea2334-fdd3-4e2e-b0d0-681da5779edb">
     <div class="basic-text rsvp-headline">
       Пожалуйста, пройдите небольшой опрос, чтобы Ваше пребывание на торжестве было комфортным:
     </div>
     <label>
       ФИО
-      <input class="text-input " type="text" v-model="name" required>
+      <input class="text-input" name="name" type="text" v-model="name" required>
     </label>
     <label>
       Вы приедете на наше торжество?
-      <select v-model="response" required>
+      <select name="response" v-model="response" required>
         <option disabled value="">Пожалуйста, выберите один вариант</option>
         <option>Да!</option>
         <option>Только ЗАГС</option>
@@ -22,7 +22,7 @@
       <div v-if="isParticipating">
         <label>
           Выберите горячее блюдо:
-          <select v-model="meal" required>
+          <select name="meal" v-model="meal" required>
             <option disabled value="">Пожалуйста, выберите один вариант</option>
             <option>Стейк из говяжей вырезки с печеным картофелем под соусом из лесных грибов</option>
             <option>Филе палтуса с овощным соте и соусом из печеного перца</option>
@@ -30,7 +30,7 @@
         </label>
         <label class="question-container">
           Вы пьете алкоголь?
-          <input type="checkbox" v-model="drinkAlcohol">
+          <input type="checkbox" name="alco-checkbox" v-model="drinkAlcohol">
         </label>
         <Transition>
           <div v-if="drinkAlcohol">
@@ -38,7 +38,7 @@
               <p>Слабый алкоголь:</p>
               <div class="low-alco--selection">
                 <label v-for="option in lowAlcoOptions" :key="option">
-                  <input type="checkbox" :value="option" v-model="lowAlco" required>
+                  <input type="checkbox" :name="`low-alco-option-${option}` + option" :value="option" v-model="lowAlco">
                   {{ option }}
                 </label>
               </div>
@@ -46,7 +46,7 @@
                 <div class="low-alco--selection" v-show="isDrinkingWine">
                   Укажите Ваши предпочтения
                   <label v-for="option in wineOptions" :key="option">
-                    <input type="checkbox" :value="option" v-model="wineOption" required>
+                    <input type="checkbox" :name="`wine-option-${option}`" :value="option" v-model="wineOption">
                     {{ option }}
                   </label>
                 </div>
@@ -56,7 +56,7 @@
               <p>Крепкий алкоголь:</p>
               <div class="low-alco--selection">
                 <label v-for="option in alcoOptions" :key="option">
-                  <input type="checkbox" :value="option" v-model="alco" required>
+                  <input type="checkbox" :name="`alco-option-${option}`" :value="option" v-model="alco">
                   {{ option }}
                 </label>
               </div>
@@ -69,11 +69,11 @@
           <br/>
           аллергии/необходимость детского меню/свой вариант
           <br/>
-          <textarea v-model="preferencesMenu"/>
+          <textarea name="preferencesMenu" v-model="preferencesMenu"/>
         </label>
         <label>
           Особые пожелания(опционально)
-          <textarea v-model="preferences"/>
+          <textarea name="preferences" v-model="preferences"/>
         </label>
         <div class="rsvp-attention">
           <div>У каждого стола будет безлимитный чай, кофе и б/а напитки: лимонады, вода с лимоном, соки и пр.</div>
@@ -82,12 +82,12 @@
       </div>
     </Transition>
     <button type="submit">Отправить</button>
+    <input type="hidden" name="redirect" value="https://maxim-and-veronika.github.io/wedding-invitation/#success">
   </form>
 </template>
 
 <script setup>
-import {computed, ref} from 'vue';
-
+import {computed, ref } from 'vue';
 const name = ref('');
 const preferencesMenu = ref('');
 const preferences = ref('');
@@ -108,23 +108,8 @@ const isParticipating = computed(() => {
 })
 
 const isDrinkingWine = computed(() => {
-  return (lowAlco.value.includes('Белое вино') || lowAlco.value.includes('Красное вино'))
+  return (lowAlco.value.includes('Белое вино') || lowAlco.value.includes('Красное вино') || lowAlco.value.includes('Шампанское'))
 })
-const submitForm = () => {
-  const formData = {
-    name: name.value,
-    preferences: preferences.value,
-    preferencesMenu: preferencesMenu.value,
-    response: response.value,
-    meal: meal.value,
-  };
-
-  if (drinkAlcohol.value) {
-    formData.alco = alco.value;
-    formData.lowAlco = lowAlco.value;
-    formData.wineOption = wineOption.value;
-  }
-};
 </script>
 
 <style scoped>
@@ -191,7 +176,9 @@ form select {
 form textarea {
   width: 100%;
   word-wrap: break-word;
-  border-radius: 20px;
+  border-radius: 12px;
+  padding-left: 10px;
+  padding-top: 10px;
 }
 
 form label {

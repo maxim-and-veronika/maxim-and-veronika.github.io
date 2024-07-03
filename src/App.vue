@@ -44,6 +44,7 @@
       </main>
     </div>
   </Transition>
+  <modal @closed="isSuccess = false" :show-modal="isSuccess"/>
 </template>
 
 <script setup>
@@ -51,7 +52,9 @@ import Navbar from "@/components/Navbar.vue";
 import RSVPForm from "@/components/RSVPForm.vue";
 import InfoBlock from "@/components/InfoBlock.vue";
 /*import FlowerRain from "@/components/FlowerRain.vue";*/
-import {onMounted, onUnmounted, ref} from 'vue';
+import {onMounted, onUnmounted, ref, watch} from 'vue';
+import Modal from "@/components/Modal.vue";
+const isSuccess = ref(true)
 
 const weddingDate = new Date('2024-09-22T15:00:00');
 const dressCode = ['В центре внимания на свадьбе должны быть молодожёны', 'Одежда торжественная, без ярких или кислотных цветов', 'Избегаем спортивного стиля и вульгарных нарядов']
@@ -98,6 +101,12 @@ function updateCountdown() {
     clearInterval(timerId);
   }
 }
+
+watch(window.location.hash, () => {
+  if (window.location.hash === 'success') {
+    isSuccess.value = true
+  }
+})
 
 </script>
 
