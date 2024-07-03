@@ -7,17 +7,20 @@
     <main class="main snap-container">
       <img class="main-picture snap-element" alt="Вы приглашены на свадьбу!" src="./assets/main.webp">
       <info-block class="snap-element" id="info" />
-
-      <div class="countdown">
+      <div class="countdown" v-if="!isWeddingStarted">
         До начала торжества:
         <div id="countdown"></div>
       </div>
-
-      <div class="snap-element dress-code">   Блок про отсутствие дресс-кода
+      <div class="countdown" v-else>
+        Свадьба уже началась!
+      </div>
+      <div class="snap-element dress-code">
         Блок про отсутствие дресс-кода
         Блок про отсутствие дресс-кода
         Блок про отсутствие дресс-кода
-        Блок про отсутствие дресс-кода</div>
+        Блок про отсутствие дресс-кода
+        Блок про отсутствие дресс-кода
+      </div>
       <r-s-v-p-form class="snap-element rsvp-form" id="rsvp"/>
       <div class="snap-element location"> Блок что и где будет происходить + ссылки на карту</div>
       <div class="gifts"> Не надо слов, не надо паники, и можно без цветов
@@ -36,10 +39,24 @@
 import Navbar from "@/components/Navbar.vue";
 import RSVPForm from "@/components/RSVPForm.vue";
 import InfoBlock from "@/components/InfoBlock.vue";
-import FlowerRain from "@/components/FlowerRain.vue";
-import {onMounted, onUnmounted, ref} from 'vue';
+/*import FlowerRain from "@/components/FlowerRain.vue";*/
+import {ref} from 'vue';
 
 const weddingDate = new Date('2024-09-22T15:00:00');
+const isWeddingStarted = ref(false)
+function pluralize(number, one, few, many) {
+  let lastDigit = number % 10;
+  let lastTwoDigits = number % 100;
+
+  if (lastDigit === 1 && lastTwoDigits !== 11) {
+    return one;
+  } else if ([2, 3, 4].includes(lastDigit) && ![12, 13, 14].includes(lastTwoDigits)) {
+    return few;
+  } else {
+    return many;
+  }
+}
+
 const updateCountdown= () => {
   const now = new Date();
   const timeLeft = weddingDate - now;
@@ -50,11 +67,14 @@ const updateCountdown= () => {
   const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
 
   document.getElementById('countdown').innerHTML = `
-      ${days} Дней ${hours} часов ${minutes} минут ${seconds} секунд
+      ${days} ${pluralize(days, 'День', 'Дня', 'Дней')}
+      ${hours} ${pluralize(hours, 'Час', 'Часа', 'Часов')}
+      ${minutes} ${pluralize(minutes, 'Минута', 'Минуты', 'Минут')}
+      ${seconds} ${pluralize(seconds, 'Секунда', 'Секунды', 'Секунд')}
     `;
 
   if (timeLeft <= 0) {
-    document.getElementById('countdown').innerHTML = 'SHOW MUST GO ON!';
+    isWeddingStarted.value = true
   }
 }
 // Update the countdown every second
@@ -69,7 +89,7 @@ setInterval(updateCountdown, 1000);
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 45px
+  scroll-padding-top: 45px;
 }
 /*.snap-container {
   scroll-snap-type: y proximity;
@@ -81,9 +101,11 @@ html {
 }*/
 
 body {
-  font-family: Zhizn;
+  font-family: Zhizn,serif;
   color: rgb(122, 84, 49);
   background-color: #fff;
+  line-height: 22px;
+  text-align: center;
 }
 
 .main {
@@ -98,16 +120,6 @@ body {
   @media screen and (max-width: 660px) {
     padding: 0;
   }
-}
-.fancy-text {
-  line-height: 1em;
-  letter-spacing: 0;
-  text-align: center;
-}
-.basic-text {
-  line-height: 1em;
-  letter-spacing: 0;
-  text-align: center;
 }
 .countdown {
   display: flex;
