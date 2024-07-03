@@ -5,10 +5,10 @@
       <header class="header" :class="{ 'header__visible': true }">
         <navbar/>
       </header>
-      <main class="main snap-container">
-        <img class="main-picture snap-element" alt="Вы приглашены на свадьбу!" src="./assets/main.webp">
-        <info-block class="snap-element" id="info"/>
-        <div class="countdown snap-element" v-if="!isWeddingStarted">
+      <main class="main">
+        <img class="main-picture" alt="Вы приглашены на свадьбу!" src="./assets/main.webp">
+        <info-block id="info"/>
+        <div class="countdown" v-if="!isWeddingStarted">
           До начала торжества:
           <div>
             {{ days }} {{ pluralize(days, 'День', 'Дня', 'Дней') }}
@@ -20,8 +20,8 @@
         <div class="countdown" v-else>
           <h1> Свадьба уже началась!</h1>
         </div>
-        <r-s-v-p-form class="snap-element rsvp-form" id="rsvp"/>
-        <div class="snap-element dress-code">
+        <r-s-v-p-form class="rsvp-form" id="rsvp"/>
+        <div class="dress-code">
           <h2> Дресс-кода с цветовыми гаммами нет. Просто следуйте простым правилам:</h2>
           <ul>
             <li class="dress-code-list" v-for="rule in dressCode">
@@ -29,15 +29,15 @@
             </li>
           </ul>
         </div>
-        <div class="snap-element location">
+        <div class="location">
           <h2>Блок что и где будет происходить + ссылки на карту</h2>
         </div>
-        <div class="gifts snap-element">
+        <div class="gifts">
           <h2> Не надо слов, не надо паники, и можно без цветов </h2>
           <img class="main-picture" alt="Мы копим на квартиру!" src="./assets/box1.jpg">
         </div>
 
-        <div class="contacts snap-element" id="contacts">
+        <div class="contacts" id="contacts">
           <a href='tel:+79110061647'>Жених: +79110061647</a>
           <a href='tel:+79119071174'>Невеста: +79119071174</a>
         </div>
@@ -104,7 +104,7 @@ function updateCountdown() {
 }
 
 watch(window.location.hash, () => {
-  if (window.location.hash === 'success') {
+  if (window.location.hash === '#success') {
     isSuccess.value = true
   }
 }, {
@@ -122,16 +122,6 @@ watch(window.location.hash, () => {
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 45px;
-}
-
-.snap-container {
-  scroll-snap-type: y proximity;
-  overflow-y: scroll;
-  max-height: calc(100vh - 45px);
-}
-
-.snap-element {
-  scroll-snap-align: start;
 }
 
 body {
