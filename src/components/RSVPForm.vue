@@ -117,6 +117,10 @@ form {
   border-radius: 20px;
   padding: 20px
 }
+form select {
+  width: 100%;
+  word-wrap: break-word;
+}
 form label {
   display: block;
   margin-bottom: 1em;
