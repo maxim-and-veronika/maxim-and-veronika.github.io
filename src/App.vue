@@ -54,7 +54,7 @@ import InfoBlock from "@/components/InfoBlock.vue";
 /*import FlowerRain from "@/components/FlowerRain.vue";*/
 import {onMounted, onUnmounted, ref, watch} from 'vue';
 import Modal from "@/components/Modal.vue";
-const isSuccess = ref(true)
+const isSuccess = ref(false)
 
 const weddingDate = new Date('2024-09-22T15:00:00');
 const dressCode = ['В центре внимания на свадьбе должны быть молодожёны', 'Одежда торжественная, без ярких или кислотных цветов', 'Избегаем спортивного стиля и вульгарных нарядов']
