@@ -87,6 +87,7 @@ body {
 
 .main {
   max-width: 100%;
+  background-color: #ffffff;
   padding: 0 20%;
 ;
 
@@ -100,12 +101,12 @@ body {
 }
 .fancy-text {
   line-height: 1em;
-  letter-spacing: 0em;
+  letter-spacing: 0;
   text-align: center;
 }
 .basic-text {
   line-height: 1em;
-  letter-spacing: 0em;
+  letter-spacing: 0;
   text-align: center;
 }
 .countdown {
