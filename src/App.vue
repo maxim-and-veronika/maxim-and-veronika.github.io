@@ -83,11 +83,11 @@ html {
 body {
   font-family: Zhizn;
   color: rgb(122, 84, 49);
+  background-color: #fff;
 }
 
 .main {
   max-width: 100%;
-  background-color: #ffffff;
   padding: 0 20%;
 ;
 
