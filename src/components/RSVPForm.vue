@@ -5,7 +5,7 @@
     </div>
     <label>
       ФИО
-      <input type="text" v-model="name" required>
+      <input class="text-input " type="text" v-model="name" required>
     </label>
     <label>
       Вы приедете на наше торжество?
@@ -19,7 +19,7 @@
     </label>
     <template v-if="willParticipate">
       <label>
-        Горячее
+        Выберите горячее блюдо:
         <select v-model="meal" required>
           <option disabled value="">Пожалуйста, выберите один вариант</option>
           <option>Стейк из говяжей вырезки с печеным картофелем под соусом из лесных грибов</option>
@@ -45,15 +45,15 @@
         </label>
       </div>
       <label>
-        Уточнения по меню:
+        Уточнения по меню(опционально):
         <br />
         аллергии/необходимость детского меню/свой вариант
         <br />
-        <input type="text" v-model="preferences">
+        <textarea v-model="preferencesMenu"/>
       </label>
       <label>
-        Особые пожелания
-        <input type="text" v-model="preferences">
+        Особые пожелания(опционально)
+        <textarea v-model="preferences"/>
       </label>
      <div class="rsvp-attention">
        <div>У каждого стола будет безлимитный чай, кофе и б/а напитки: лимонады, вода с лимоном, соки и пр.</div>
@@ -70,6 +70,7 @@
 import {computed, ref} from 'vue';
 
 const name = ref('');
+const preferencesMenu = ref('');
 const preferences = ref('');
 const response = ref('');
 const meal = ref('');
@@ -80,7 +81,7 @@ const alcoOptions = ['Водка', 'Коньяк', 'Ром'];
 const drinkAlcohol = ref(false);
 
 const willParticipate = computed( () => {
-  return !(response.value.includes('Нет') || response.value.includes('Только ЗАГС'))
+  return !(response.value.includes('Нет') || response.value.includes('Только ЗАГС') || !response.value)
 })
 const submitForm = () => {
   // Here we'll handle the form submission
@@ -122,6 +123,14 @@ form {
   padding: 20px
 }
 form select {
+  width: 100%;
+  word-wrap: break-word;
+}
+.text-input {
+  width: 100%;
+  word-wrap: break-word;
+}
+form textarea {
   width: 100%;
   word-wrap: break-word;
 }
