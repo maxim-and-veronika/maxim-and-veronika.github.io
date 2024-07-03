@@ -8,7 +8,7 @@
       <main class="main snap-container">
         <img class="main-picture snap-element" alt="Вы приглашены на свадьбу!" src="./assets/main.webp">
         <info-block class="snap-element" id="info"/>
-        <div class="countdown" v-if="!isWeddingStarted">
+        <div class="countdown snap-element" v-if="!isWeddingStarted">
           До начала торжества:
           <div>
             {{ days }} {{ pluralize(days, 'День', 'Дня', 'Дней') }}
@@ -32,12 +32,12 @@
         <div class="snap-element location">
           <h2>Блок что и где будет происходить + ссылки на карту</h2>
         </div>
-        <div class="gifts">
+        <div class="gifts snap-element">
           <h2> Не надо слов, не надо паники, и можно без цветов </h2>
           <img class="main-picture" alt="Мы копим на квартиру!" src="./assets/box1.jpg">
         </div>
 
-        <div class="contacts" id="contacts">
+        <div class="contacts snap-element" id="contacts">
           <a href='tel:+79110061647'>Жених: +79110061647</a>
           <a href='tel:+79119071174'>Невеста: +79119071174</a>
         </div>
@@ -54,6 +54,7 @@ import InfoBlock from "@/components/InfoBlock.vue";
 /*import FlowerRain from "@/components/FlowerRain.vue";*/
 import {onMounted, onUnmounted, ref, watch} from 'vue';
 import Modal from "@/components/Modal.vue";
+
 const isSuccess = ref(false)
 
 const weddingDate = new Date('2024-09-22T15:00:00');
@@ -106,6 +107,8 @@ watch(window.location.hash, () => {
   if (window.location.hash === 'success') {
     isSuccess.value = true
   }
+}, {
+  immediate: true
 })
 
 </script>
@@ -121,14 +124,15 @@ html {
   scroll-padding-top: 45px;
 }
 
-/*.snap-container {
+.snap-container {
   scroll-snap-type: y proximity;
   overflow-y: scroll;
   max-height: calc(100vh - 45px);
 }
+
 .snap-element {
   scroll-snap-align: start;
-}*/
+}
 
 body {
   font-family: Zhizn, serif;
