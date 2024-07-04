@@ -5,7 +5,7 @@
     </header>
     <main class="main">
       <img class="main-picture" alt="Вы приглашены на свадьбу!" src="./assets/main.webp">
-      <info-block v-motion-slide-visible-once-bottom :delay="2000" :duration="1500"/>
+      <info-block v-motion-slide-visible-once-bottom :delay="2200" :duration="1500"/>
       <div v-motion-slide-visible-once-bottom :delay="200" :duration="700" class="countdown" v-if="!isWeddingStarted">
         До начала торжества:
         <div class="countdown-numbers">
@@ -292,6 +292,10 @@ a {
 .v-enter-from,
 .v-leave-to {
   opacity: 0;
+}
+
+input[type="checkbox"] {
+  accent-color: #f9cd47;
 }
 
 </style>
