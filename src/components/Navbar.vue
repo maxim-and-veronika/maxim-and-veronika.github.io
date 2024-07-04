@@ -1,9 +1,9 @@
 <template>
   <nav>
     <ul>
-      <li class="animated-menu-item" style="animation-delay: 1s;"><a href="#rsvp">Опрос</a></li>
-      <li class="animated-menu-item" style="animation-delay: 1.5s;"><a href="#info">Информация</a></li>
-      <li class="animated-menu-item" style="animation-delay: 2s;"><a href="#contacts">Контакты</a></li>
+      <li class="animated-menu-item" style="animation-delay: 0.5s;"><a href="#rsvp">Опрос</a></li>
+      <li class="animated-menu-item" style="animation-delay: 1s;"><a href="#info">Информация</a></li>
+      <li class="animated-menu-item" style="animation-delay: 1.5s;"><a href="#contacts">Контакты</a></li>
     </ul>
   </nav>
 </template>
