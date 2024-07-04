@@ -1,65 +1,81 @@
 <template>
-  <Transition appear>
-    <div id="app">
-      <!--    <flower-rain />-->
-      <header class="header" :class="{ 'header__visible': true }">
-        <navbar/>
-      </header>
-      <main class="main">
-        <img class="main-picture" alt="Вы приглашены на свадьбу!" src="./assets/main.webp">
-        <info-block id="info"/>
-        <div class="countdown" v-if="!isWeddingStarted">
-          До начала торжества:
-          <div>
-            {{ days }} {{ pluralize(days, 'День', 'Дня', 'Дней') }}
-            {{ hours }} {{ pluralize(hours, 'Час', 'Часа', 'Часов') }}
-            {{ minutes }} {{ pluralize(minutes, 'Минута', 'Минуты', 'Минут') }}
-            {{ seconds }} {{ pluralize(seconds, 'Секунда', 'Секунды', 'Секунд') }}
-          </div>
+  <div v-motion-fade-visible-once :delay="200" :duration="1500" id="app">
+    <header class="header">
+      <navbar/>
+    </header>
+    <main class="main">
+      <img class="main-picture" alt="Вы приглашены на свадьбу!" src="./assets/main.webp">
+      <info-block v-motion-slide-visible-once-bottom :delay="2000" :duration="1500"/>
+      <div v-motion-slide-visible-once-bottom :delay="200" :duration="700" class="countdown" v-if="!isWeddingStarted">
+        До начала торжества:
+        <div class="countdown-numbers">
+          {{ days }} {{ pluralize(days, 'День', 'Дня', 'Дней') }}
+          {{ hours }} {{ pluralize(hours, 'Час', 'Часа', 'Часов') }}
+          {{ minutes }} {{ pluralize(minutes, 'Минута', 'Минуты', 'Минут') }}
+          {{ seconds }} {{ pluralize(seconds, 'Секунда', 'Секунды', 'Секунд') }}
         </div>
-        <div class="countdown" v-else>
-          <h1> Свадьба уже началась!</h1>
+      </div>
+      <div class="countdown" v-else>
+        <h1> Свадьба уже началась!</h1>
+      </div>
+      <r-s-v-p-form v-if="!isSuccess" v-motion-slide-visible-once-bottom :delay="200" :duration="700" class="rsvp-form"
+                    id="rsvp"/>
+      <div v-motion-slide-visible-once-bottom :delay="200" :duration="700" class="dress-code">
+        <div class="dress-code-inner">
+          <div>Мы очень ждем и с удовольствием готовимся к нашему незабываемому дню!</div>
+          <div>Поддержите нас улыбками и объятиями, а также красивыми нарядами на ваш выбор</div>
         </div>
-        <r-s-v-p-form class="rsvp-form" id="rsvp"/>
-        <div class="dress-code">
-          <h2> Дресс-кода с цветовыми гаммами нет. Просто следуйте простым правилам:</h2>
-          <ul>
-            <li class="dress-code-list" v-for="rule in dressCode">
-              {{ rule }}
-            </li>
-          </ul>
+      </div>
+      <div v-motion-slide-visible-once-bottom :delay="200" :duration="700" id="info" class="location">
+        <h2 class="links"><a :href="zagsMapLink" target="_blank">ЗАГС</a> находится по адресу Фурштатская ул., 52,
+          Санкт-Петербург. Начало церемонии в 14:30</h2>
+        <h2 class="links"><a :href="restaurantMapLink" target="_blank">Ресторан</a> находится по адресу Потёмкинская
+          ул., 4А, Санкт-Петербург. Начало фуршета в 15:40</h2>
+        Между ЗАГСом и рестораном - 5 минут спокойным шагом. Можно войти как со стороны улицы, так и через отдельный
+        вход прямо из Таврического сада
+      </div>
+      <div class="gifts">
+        <div v-motion-slide-visible-once-top:delay="200" :duration="1400" v-if="!showBestGift">
+          <h2> Уже мечтаете попасть к нам на свадьбу? </h2>
+          <button @click="showBestGift = true">Да!</button>
         </div>
-        <div class="location">
-          <h2>Блок что и где будет происходить + ссылки на карту</h2>
-        </div>
-        <div class="gifts">
-          <h2> Не надо слов, не надо паники, и можно без цветов </h2>
+        <div v-motion-slide-visible-once-bottom :delay="200" :duration="500" v-if="showBestGift">
+          <h2> А мы мечтаем о своей квартире! </h2>
           <img class="main-picture" alt="Мы копим на квартиру!" src="./assets/box1.jpg">
+          <h2> Ваш вклад в данную мечту станет для нас лучшим подарком</h2>
         </div>
-
-        <div class="contacts" id="contacts">
-          <a href='tel:+79110061647'>Жених: +79110061647</a>
-          <a href='tel:+79119071174'>Невеста: +79119071174</a>
+      </div>
+      <div class="contacts" id="contacts">
+        <h2> Если вы потерялись, хотите что-то сообщить или просто соскучились - пожалуйста, воспользуйтесь этими
+          контактами</h2>
+        <div class="contacts-inner">
+          <a href='tel:+79110061647'>Позвонить</a> или <a href='https://t.me/gmnls'>написать</a> Максиму
         </div>
-      </main>
-    </div>
-  </Transition>
-  <modal @closed="isSuccess = false" :show-modal="isSuccess"/>
+        <div class="contacts-inner veronika">
+          <a href='tel:+79119071174'>Позвонить</a> или <a href='https://t.me/pmnik'>написать</a> Веронике
+        </div>
+      </div>
+    </main>
+  </div>
+  <modal @closed="isModalSuccessShown = false" :show-modal="isModalSuccessShown"/>
 </template>
 
 <script setup>
 import Navbar from "@/components/Navbar.vue";
 import RSVPForm from "@/components/RSVPForm.vue";
 import InfoBlock from "@/components/InfoBlock.vue";
-/*import FlowerRain from "@/components/FlowerRain.vue";*/
 import {onMounted, onUnmounted, ref, watch} from 'vue';
 import Modal from "@/components/Modal.vue";
 
+const isModalSuccessShown = ref(false)
 const isSuccess = ref(false)
+const showBestGift = ref(false)
 
 const weddingDate = new Date('2024-09-22T15:00:00');
-const dressCode = ['В центре внимания на свадьбе должны быть молодожёны', 'Одежда торжественная, без ярких или кислотных цветов', 'Избегаем спортивного стиля и вульгарных нарядов']
 const isWeddingStarted = ref(false)
+
+const zagsMapLink = `https://maps.app.goo.gl/14p5cqLKjmENp19i7`;
+const restaurantMapLink = `https://maps.app.goo.gl/NxRauFofVrwYdhUu9`;
 
 let timerId = null;
 const days = ref(0);
@@ -105,6 +121,7 @@ function updateCountdown() {
 
 watch(window.location.hash, () => {
   if (window.location.hash === '#success') {
+    isModalSuccessShown.value = true
     isSuccess.value = true
   }
 }, {
@@ -160,15 +177,27 @@ h2 {
   border-radius: 20px;
 }
 
+.countdown-numbers {
+  font-size: 17px;
+  white-space: nowrap;
+}
+
 .dress-code {
   padding: 20px;
   margin-top: 20px;
-  background-color: #F3EFD7;
+  font-size: 18px;
+  line-height: 28px;
+  background-color: #fcfae3;
   border-radius: 20px;
 }
 
-.dress-code-list {
-  text-align: start;
+.dress-code-inner {
+  display: flex;
+  flex-flow: column;
+  gap: 30px;
+  background-color: white;
+  border-radius: 30px;
+  padding: 20px;
 }
 
 .location {
@@ -178,11 +207,32 @@ h2 {
   border-radius: 20px;
 }
 
+.links {
+  background-color: white;
+  border-radius: 30px;
+  padding: 20px;
+}
+
 .gifts {
   padding: 20px;
-  margin: 20px 0;
-  background-color: #f6f9e9;
+  margin-top: 20px;
+  background-color: #f0f8ff;
   border-radius: 20px;
+
+}
+
+button {
+  display: block;
+  margin: 0 auto auto;
+  background-color: #333;
+  color: #fff;
+  border: none;
+  padding: 0.5em 1em;
+  border-radius: 8px;
+}
+
+a {
+  color: #333;
 }
 
 .rsvp-form {
@@ -199,11 +249,29 @@ h2 {
   border-radius: 20px;
 }
 
+.contacts-inner {
+  display: flex;
+  flex-flow: row;
+  justify-content: center;
+  gap: 7px;
+  background-color: #f5faff;
+  padding: 5px;
+  border-radius: 11px;
+  width: fit-content;
+  align-self: center;
+}
+
+.veronika {
+  margin-top: 5px;
+  background-color: #fff8dc
+}
+
 .header {
   position: sticky;
+  z-index: 2;
   top: 0;
   width: 100%;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .main-picture {
@@ -218,7 +286,7 @@ h2 {
 
 .v-enter-active,
 .v-leave-active {
-  transition: opacity 2s ease;
+  transition: opacity 2.5s ease;
 }
 
 .v-enter-from,

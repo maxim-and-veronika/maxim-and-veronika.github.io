@@ -6,7 +6,7 @@
     </div>
     <label>
       ФИО
-      <input class="text-input" name="name" type="text" v-model="name" required>
+      <input :placeholder="currentTypingWordValue" class="text-input" name="name" type="text" v-model="name" required>
     </label>
     <label>
       Вы приедете на наше торжество?
@@ -34,7 +34,7 @@
         </label>
         <Transition>
           <div v-if="drinkAlcohol">
-            <div class="low-alco" >
+            <div class="low-alco">
               <p>Слабый алкоголь:</p>
               <div class="low-alco--selection">
                 <label v-for="option in lowAlcoOptions" :key="option">
@@ -87,7 +87,9 @@
 </template>
 
 <script setup>
-import {computed, ref } from 'vue';
+import {computed, onMounted, onUnmounted, ref} from 'vue';
+import {useSearchInput} from "@/composables/input-typer.js";
+
 const name = ref('');
 const preferencesMenu = ref('');
 const preferences = ref('');
@@ -96,6 +98,13 @@ const meal = ref('');
 const lowAlco = ref([]);
 const wineOption = ref([]);
 const alco = ref([]);
+
+const {
+  startAutoTyping,
+  stopAutoTyping,
+  currentTypingWordValue,
+} = useSearchInput()
+
 
 const drinkAlcohol = ref(false);
 
@@ -109,6 +118,13 @@ const isParticipating = computed(() => {
 
 const isDrinkingWine = computed(() => {
   return (lowAlco.value.includes('Белое вино') || lowAlco.value.includes('Красное вино') || lowAlco.value.includes('Шампанское'))
+})
+
+onMounted(() => {
+  startAutoTyping()
+})
+onUnmounted(() => {
+  stopAutoTyping()
 })
 </script>
 
@@ -132,6 +148,7 @@ const isDrinkingWine = computed(() => {
   label:last-child {
     margin-bottom: 0;
   }
+
   border-radius: 20px;
   padding: 20px;
   background-color: white;
@@ -166,11 +183,17 @@ form {
 form select {
   width: 100%;
   word-wrap: break-word;
+  border-radius: 10px;
+  border: none;
+  padding-left: 10px;
 }
 
 .text-input {
   width: 100%;
   word-wrap: break-word;
+  border-radius: 10px;
+  border: none;
+  padding-left: 10px;
 }
 
 form textarea {
