@@ -6,7 +6,7 @@
     <main class="main">
       <img class="main-picture" alt="Вы приглашены на свадьбу!" src="./assets/main.webp">
       <info-block v-motion-slide-visible-once-bottom :delay="2200" :duration="1500"/>
-      <div v-motion-slide-visible-once-bottom :delay="200" :duration="700" class="countdown" v-if="!isWeddingStarted">
+      <div v-motion-slide-visible-once-bottom :delay="200" :duration="1200" class="countdown" v-if="!isWeddingStarted">
         До начала торжества:
         <div class="countdown-numbers">
           {{ days }} {{ pluralize(days, 'День', 'Дня', 'Дней') }}
@@ -18,15 +18,15 @@
       <div class="countdown" v-else>
         <h1> Свадьба уже началась!</h1>
       </div>
-      <r-s-v-p-form v-if="!isSuccess" v-motion-slide-visible-once-bottom :delay="200" :duration="700" class="rsvp-form"
+      <r-s-v-p-form v-if="!isSuccess" v-motion-slide-visible-once-bottom :delay="200" :duration="1200" class="rsvp-form"
                     id="rsvp"/>
-      <div v-motion-slide-visible-once-bottom :delay="200" :duration="700" class="dress-code">
+      <div v-motion-slide-visible-once-bottom :delay="200" :duration="1200" class="dress-code">
         <div class="dress-code-inner">
           <div>Мы очень ждем и с удовольствием готовимся к нашему незабываемому дню!</div>
           <div>Поддержите нас улыбками и объятиями, а также красивыми нарядами на ваш выбор</div>
         </div>
       </div>
-      <div v-motion-slide-visible-once-bottom :delay="200" :duration="700" id="info" class="location">
+      <div v-motion-slide-visible-once-bottom :delay="200" :duration="1200" id="info" class="location">
         <h2 class="links"><a :href="zagsMapLink" target="_blank">ЗАГС</a> находится по адресу Фурштатская ул., 52,
           Санкт-Петербург. Начало церемонии в 14:30</h2>
         <h2 class="links"><a :href="restaurantMapLink" target="_blank">Ресторан</a> находится по адресу Потёмкинская
