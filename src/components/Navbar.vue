@@ -1,9 +1,9 @@
 <template>
   <nav>
     <ul>
-      <li class="animated-menu-item" style="animation-delay: 0.3s;"><a href="#rsvp">Опрос</a></li>
-      <li class="animated-menu-item" style="animation-delay: 0.7s;"><a href="#info">Информация</a></li>
-      <li class="animated-menu-item" style="animation-delay: 1.1s;"><a href="#contacts">Контакты</a></li>
+      <li v-motion-slide-visible-once-top :delay="500" :duration="1500"><a href="#rsvp">Опрос</a></li>
+      <li v-motion-slide-visible-once-top :delay="1000" :duration="1500"><a href="#info">Информация</a></li>
+      <li v-motion-slide-visible-once-top :delay="1500" :duration="1500"><a href="#contacts">Контакты</a></li>
     </ul>
   </nav>
 </template>
@@ -28,22 +28,5 @@ nav ul li {
 nav ul li a {
   color: #333;
   text-decoration: none;
-}
-
-.animated-menu-item {
-  opacity: 0;
-  transform: translateY(20px);
-  animation: fadeInUp 2s ease forwards;
-}
-
-@keyframes fadeInUp {
-  0% {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }
 </style>
