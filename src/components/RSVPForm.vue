@@ -77,12 +77,13 @@
         </label>
         <div class="rsvp-attention">
           <div>У каждого стола будет безлимитный чай, кофе и б/а напитки: лимонады, вода с лимоном, соки и пр.</div>
-          <div>Для заказа/дозаказа обращайтесь в официантам🍋</div>
+          <div>Для заказа/дозаказа обращайтесь к официантам🍋</div>
         </div>
       </div>
     </Transition>
     <button type="submit">Отправить</button>
     <input type="hidden" name="redirect" value="https://maxim-and-veronika.github.io/wedding-invitation/#success">
+    <input type="hidden" name="subject" :value="`Заявка от ${name}`">
   </form>
 </template>
 
