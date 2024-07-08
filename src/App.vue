@@ -35,11 +35,11 @@
         вход прямо из Таврического сада
       </div>
       <div class="gifts">
-        <div v-motion-slide-visible-once-top:delay="200" :duration="1400" v-if="!showBestGift">
+        <div v-motion-slide-visible-once-top:delay="200" :duration="1400" v-show="!showBestGift">
           <h2> Уже мечтаете попасть к нам на свадьбу? </h2>
           <button @click="showBestGift = true">Да!</button>
         </div>
-        <div v-motion-slide-visible-once-bottom :delay="200" :duration="500" v-if="showBestGift">
+        <div v-motion-slide-visible-once-bottom :delay="200" :duration="500" v-show="showBestGift">
           <h2> А мы мечтаем о своей квартире! </h2>
           <img class="main-picture" alt="Мы копим на квартиру!" src="./assets/box1.jpg">
           <h2> Ваш вклад в данную мечту станет для нас лучшим подарком</h2>
