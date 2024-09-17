@@ -28,16 +28,16 @@
       </div>
       <div v-motion-slide-visible-once-bottom :delay="200" :duration="1200" id="info" class="location">
         <h2 class="links"><a :href="zagsMapLink" target="_blank">ЗАГС</a> находится по адресу Фурштатская ул., 52,
-          Санкт-Петербург. Начало церемонии в 14:30</h2>
+          Санкт-Петербург. Сбор в  14:30. Начало церемонии в 15:00</h2>
         <h2 class="links"><a :href="restaurantMapLink" target="_blank">Ресторан</a> находится по адресу Потёмкинская
-          ул., 4А, Санкт-Петербург. Начало фуршета в 15:40</h2>
-        Между ЗАГСом и рестораном - 5 минут спокойным шагом. Можно войти как со стороны улицы, так и через отдельный
+          ул., 4А, Санкт-Петербург. Начало фуршета в 16:00</h2>
+        Между ЗАГСом и рестораном - 7 минут спокойным шагом. Можно войти как со стороны улицы, так и через отдельный
         вход прямо из Таврического сада
       </div>
       <div class="gifts">
         <div v-motion-slide-visible-once-top:delay="200" :duration="1400" v-show="!showBestGift">
           <h2> Уже мечтаете попасть к нам на свадьбу? </h2>
-          <button @click="showBestGift = true">Да!</button>
+          <button @click="showBestGift = true">Да!</button> 
         </div>
         <div v-motion-slide-visible-once-bottom :delay="200" :duration="500" v-show="showBestGift">
           <h2> А мы мечтаем о своей квартире! </h2>
