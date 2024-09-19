@@ -193,6 +193,7 @@ watch(window.location.hash, () => {
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 45px;
+  touch-action: manipulation;
 }
 
 body {
@@ -201,6 +202,11 @@ body {
   background-color: #fff;
   line-height: 22px;
   text-align: center;
+
+  -webkit-touch-callout: none; /* Prevent callout to copy image, etc when tap to hold */
+  -webkit-text-size-adjust: 100%; /* Prevent font scaling in landscape while allowing user zoom */
+  -webkit-user-select: none; /* Prevent copy paste, to allow, change 'none' to 'text' */
+  -webkit-tap-highlight-color: rgba(0,0,0,0); /* Remove tap highlight color */
 }
 
 h2 {
