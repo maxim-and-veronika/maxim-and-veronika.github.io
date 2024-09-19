@@ -58,11 +58,13 @@
     </main>
   </div>
   <modal @closed="isModalSuccessShown = false" :show-modal="isModalSuccessShown"/>
-    <div>
+    <div v-if="isVoteShown">
       <h1>Gender Vote Clicker</h1>
       <button @click="resetVotes">Reset Votes</button>
-      <button @click="vote('male')">Vote Male</button>
-      <button @click="vote('female')">Vote Female</button>
+      <div class="vote-container">
+        <button class="votes votes--male" @click="vote('male')">Vote Male</button>
+        <button class="votes votes--female" @click="vote('female')">Vote Female</button>
+      </div>
       <p>Male Votes: {{ maleVotes }}</p>
       <p>Female Votes: {{ femaleVotes }}</p>
     </div>
@@ -348,6 +350,27 @@ a {
 
 input[type="checkbox"] {
   accent-color: #f9cd47;
+}
+
+.vote-container {
+  display: flex;
+  flex-flow: row;
+  justify-content: center;
+  gap: 40px
+}
+.votes {
+  margin: 0;
+  width: 150px;
+  height: 150px;
+  border-radius: 100px;
+
+
+  &--male {
+
+  }
+  &--female {
+
+  }
 }
 
 </style>
