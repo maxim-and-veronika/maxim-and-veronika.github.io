@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@vueuse/motion": "^2.2.3",
+    "firebase": "^10.13.2",
     "google-maps-api-loader": "^1.1.1",
     "vue": "^3.4.29",
     "vue3-google-map": "^0.20.0"

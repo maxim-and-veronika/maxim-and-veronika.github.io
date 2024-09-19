@@ -58,6 +58,14 @@
     </main>
   </div>
   <modal @closed="isModalSuccessShown = false" :show-modal="isModalSuccessShown"/>
+    <div>
+      <h1>Gender Vote Clicker</h1>
+      <button @click="resetVotes">Reset Votes</button>
+      <button @click="vote('male')">Vote Male</button>
+      <button @click="vote('female')">Vote Female</button>
+      <p>Male Votes: {{ maleVotes }}</p>
+      <p>Female Votes: {{ femaleVotes }}</p>
+    </div>
 </template>
 
 <script setup>
@@ -66,10 +74,26 @@ import RSVPForm from "@/components/RSVPForm.vue";
 import InfoBlock from "@/components/InfoBlock.vue";
 import {onMounted, onUnmounted, ref, watch} from 'vue';
 import Modal from "@/components/Modal.vue";
+import { doc, getDoc, setDoc, updateDoc, onSnapshot } from "firebase/firestore";
+import { db } from "./firebase";
 
 const isModalSuccessShown = ref(false)
+const isVoteShown = ref(false)
 const isSuccess = ref(false)
 const showBestGift = ref(false)
+
+const maleVotes = ref(0);
+const femaleVotes = ref(0);
+
+const votesDocRef = doc(db, "votes", "1A6sJHx4fOmq2frsP2hJ");
+
+onSnapshot(votesDocRef, (doc) => {
+  if (doc.exists()) {
+    const data = doc.data();
+    maleVotes.value = data.male || 0;
+    femaleVotes.value = data.female || 0;
+  }
+});
 
 const weddingDate = new Date('2024-09-22T15:00:00');
 const isWeddingStarted = ref(false)
@@ -119,10 +143,38 @@ function updateCountdown() {
   }
 }
 
+const vote = async(gender) => {
+  const votesDocRef = doc(db, "votes", "1A6sJHx4fOmq2frsP2hJ");
+  const docSnap = await getDoc(votesDocRef);
+  if (docSnap.exists()) {
+    const currentVotes = docSnap.data()[gender] || 0;
+    await updateDoc(votesDocRef, {
+      [gender]: currentVotes + 1,
+    });
+  } else {
+    await setDoc(votesDocRef, {
+      male: 0,
+      female: 0,
+      [gender]: 1,
+    });
+  }
+}
+
+const resetVotes = async() => {
+  const votesDocRef = doc(db, "votes", "1A6sJHx4fOmq2frsP2hJ");
+  await updateDoc(votesDocRef, {
+    male: 0,
+    female: 0,
+  });
+}
+
 watch(window.location.hash, () => {
   if (window.location.hash === '#success') {
     isModalSuccessShown.value = true
     isSuccess.value = true
+  }
+  if (window.location.hash === '#vote') {
+    isVoteShown.value = true
   }
 }, {
   immediate: true
